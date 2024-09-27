@@ -1,0 +1,1 @@
+(self.webpackChunkbattleship=self.webpackChunkbattleship||[]).push([[792],{44:()=>{}},e=>{e(e.s=44)}]);

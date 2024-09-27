@@ -17,12 +17,6 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: "./src/index.html",
     }),
-    new CopyWebpackPlugin({
-      patterns: [
-        { from: 'src/images', to: 'images' },
-        { from: 'src/fonts', to: 'fonts' },
-      ],
-    }),
   ],
   module: {
     rules: [

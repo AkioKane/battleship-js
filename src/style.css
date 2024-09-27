@@ -1,0 +1,10 @@
+:root {
+  --bg-main: 	#F0F8FF;  
+}
+
+.main {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
