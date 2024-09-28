@@ -1,10 +1,38 @@
+@font-face {
+  font-family: "Battleship";
+  src: url("./fonts/Big_Shoulders_Stencil_Text/static/BigShouldersStencilText-Black.ttf");
+}
+
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
 :root {
   --bg-main: 	#F0F8FF;  
 }
 
 .main {
+  height: 100vh;
+}
+
+.game {
   display: flex;
   justify-content: center;
+  align-items: baseline;
+  height: 80%;
+  width: 100%;
+}
+
+.head-h1 {
+  display: flex;
   align-items: center;
-  height: 100vh;
+  justify-content: center;
+  font-family: "Battleship";
+  letter-spacing: 0.225em;
+  text-transform: uppercase;
+  font-size: 5rem;
+  margin-top: 0.5em;
+  font-weight: 900;
 }
