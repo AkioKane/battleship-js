@@ -1,5 +1,5 @@
-import './styles/style.css';
-import './modules/factories/ship.js';
-import './modules/DOM/gameboard.js';
-import './modules/factories/player.js';
-import './modules/DOM/battle.js';
+import './style.css';
+import './ship.js';
+import './gameboard.js';
+import './player.js';
+import './battle.js';
