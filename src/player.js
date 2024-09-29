@@ -7,21 +7,51 @@ class Player {
   }
 
   createAiShips() {
-    this.aiPlayer.createShip(4, [this.getRandomNumber(0, 9), this.getRandomNumber(0, 5)])
-    this.aiPlayer.createShip(3, [this.getRandomNumber(0, 9), this.getRandomNumber(0, 6)])
-    this.aiPlayer.createShip(2, [this.getRandomNumber(0, 9), this.getRandomNumber(0, 7)])
-    this.aiPlayer.createShip(2, [this.getRandomNumber(0, 9), this.getRandomNumber(0, 7)])
-    this.aiPlayer.createShip(1, [this.getRandomNumber(0, 9), this.getRandomNumber(0, 8)])
+    this.aiPlayer.createShip(4, [
+      this.getRandomNumber(0, 9),
+      this.getRandomNumber(0, 5),
+    ]);
+    this.aiPlayer.createShip(3, [
+      this.getRandomNumber(0, 9),
+      this.getRandomNumber(0, 6),
+    ]);
+    this.aiPlayer.createShip(2, [
+      this.getRandomNumber(0, 9),
+      this.getRandomNumber(0, 7),
+    ]);
+    this.aiPlayer.createShip(2, [
+      this.getRandomNumber(0, 9),
+      this.getRandomNumber(0, 7),
+    ]);
+    this.aiPlayer.createShip(1, [
+      this.getRandomNumber(0, 9),
+      this.getRandomNumber(0, 8),
+    ]);
   }
 
   createRandomPlayerShips() {
     this.player.randomShips = true;
-    
-    this.player.createShip(4, [this.getRandomNumber(0, 9), this.getRandomNumber(0, 5)])
-    this.player.createShip(2, [this.getRandomNumber(0, 9), this.getRandomNumber(0, 7)])
-    this.player.createShip(2, [this.getRandomNumber(0, 9), this.getRandomNumber(0, 7)])
-    this.player.createShip(3, [this.getRandomNumber(0, 9), this.getRandomNumber(0, 6)])
-    this.player.createShip(1, [this.getRandomNumber(0, 9), this.getRandomNumber(0, 8)])
+
+    this.player.createShip(4, [
+      this.getRandomNumber(0, 9),
+      this.getRandomNumber(0, 5),
+    ]);
+    this.player.createShip(2, [
+      this.getRandomNumber(0, 9),
+      this.getRandomNumber(0, 7),
+    ]);
+    this.player.createShip(2, [
+      this.getRandomNumber(0, 9),
+      this.getRandomNumber(0, 7),
+    ]);
+    this.player.createShip(3, [
+      this.getRandomNumber(0, 9),
+      this.getRandomNumber(0, 6),
+    ]);
+    this.player.createShip(1, [
+      this.getRandomNumber(0, 9),
+      this.getRandomNumber(0, 8),
+    ]);
   }
 
   getRandomNumber(min, max) {
@@ -29,7 +59,7 @@ class Player {
   }
 }
 
-export { Player }
+export { Player };
 
 // const player = new Player();
 

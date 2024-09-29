@@ -8,7 +8,7 @@ class Node {
 }
 
 class Gameboard {
-  constructor(side, field = 10*10) {
+  constructor(side, field = 10 * 10) {
     this.side = side;
     if (this.side === ".ai-player") {
       this.sideOpponent = ".player";
@@ -25,14 +25,18 @@ class Gameboard {
   createTable() {
     const tables = document.querySelectorAll(".table");
 
-    if (tables[0].querySelector("div") !== null || tables[1].querySelector("div") !== null) return;
+    if (
+      tables[0].querySelector("div") !== null ||
+      tables[1].querySelector("div") !== null
+    )
+      return;
 
-    for(let i = 0; i < this.field; i++) {
+    for (let i = 0; i < this.field; i++) {
       tables.forEach((table) => {
         const el = document.createElement("div");
         el.classList.add("cell");
         table.appendChild(el);
-      })
+      });
     }
   }
 
@@ -41,57 +45,65 @@ class Gameboard {
       return console.log("ship length is incorrect!");
     }
     const ship = new Ship(size);
-    const coordinate = [(coordinates[0] * 10) + coordinates[1], 
-    ((coordinates[0] * 10) + coordinates[1]) + size]
+    const coordinate = [
+      coordinates[0] * 10 + coordinates[1],
+      coordinates[0] * 10 + coordinates[1] + size,
+    ];
 
     if (this.checkForAvaliable(coordinate) === false) {
-      console.log(this.side)
+      console.log(this.side);
       if (this.side === ".ai-player") {
-        return this.createShip(size, [this.getRandomNumber(0, 9), this.getRandomNumber(0, 9 - size)])
+        return this.createShip(size, [
+          this.getRandomNumber(0, 9),
+          this.getRandomNumber(0, 9 - size),
+        ]);
       } else if (this.randomShips) {
-        return this.createShip(size, [this.getRandomNumber(0, 9), this.getRandomNumber(0, 9 - size)])
+        return this.createShip(size, [
+          this.getRandomNumber(0, 9),
+          this.getRandomNumber(0, 9 - size),
+        ]);
       } else {
-        console.log("Incorrect position!")
+        console.log("Incorrect position!");
       }
     }
 
-    if ((coordinates[1] + size) >= Math.sqrt(this.field)) {
+    if (coordinates[1] + size >= Math.sqrt(this.field)) {
       return console.log("is big coordinates!");
     }
-    
+
     const sidePlayers = document.querySelector(this.side);
     const cells = sidePlayers.querySelectorAll(".cell");
-    const coordinatesShip = []
-    for(let i = coordinate[0]; i <= coordinate[1]; i++) {
+    const coordinatesShip = [];
+    for (let i = coordinate[0]; i <= coordinate[1]; i++) {
       cells[i].classList.add("field-ship");
 
       // cells[i].classList.add("field-ship-side") // comment
 
       if (this.side === ".player") {
-        cells[i].classList.add("field-ship-side")
+        cells[i].classList.add("field-ship-side");
       }
       coordinatesShip.push(i);
     }
-    return this.ships.push(new Node(coordinatesShip, ship))
+    return this.ships.push(new Node(coordinatesShip, ship));
   }
 
   receiveAttack(coordinate) {
     const sidePlayers = document.querySelector(this.sideOpponent);
     const cells = sidePlayers.querySelectorAll(".cell");
-    const coordinateAttack = (coordinate[0] * 10) + coordinate[1];
+    const coordinateAttack = coordinate[0] * 10 + coordinate[1];
     if (cells[coordinateAttack].classList.contains("field-ship")) {
       for (let i of this.ships) {
         for (let cor of i.coordinates) {
           if (coordinateAttack === cor) {
             i.ship.hit();
-            cells[coordinateAttack].classList.add("cell-destroyed")
+            cells[coordinateAttack].classList.add("cell-destroyed");
             break;
           }
         }
       }
     } else {
       cells[coordinateAttack].classList.add("cell-miss");
-      this.miss.push(coordinateAttack)
+      this.miss.push(coordinateAttack);
     }
     return this;
   }
@@ -99,15 +111,15 @@ class Gameboard {
   checkSunk() {
     for (let i of this.ships) {
       if (i.ship.sunk === false) {
-        return false
+        return false;
       }
     }
     return true;
   }
   checkForAvaliable(coordinate) {
     const coordinates = [];
-    for(let i = coordinate[0]; i <= coordinate[1]; i++) {
-      coordinates.push(i)
+    for (let i = coordinate[0]; i <= coordinate[1]; i++) {
+      coordinates.push(i);
     }
     for (let i of this.ships) {
       for (let cor of i.coordinates) {
@@ -116,8 +128,12 @@ class Gameboard {
             return false;
           } else if (cor === y - 10 || cor === y + 10) {
             return false;
-          } else if (cor === y - 11 || cor === y + 11 || 
-            cor === y - 9 || cor === y + 9) {
+          } else if (
+            cor === y - 11 ||
+            cor === y + 11 ||
+            cor === y - 9 ||
+            cor === y + 9
+          ) {
             return false;
           }
         }
@@ -131,4 +147,4 @@ class Gameboard {
   }
 }
 
-export { Gameboard }
+export { Gameboard };
