@@ -8,15 +8,24 @@ class Node {
 }
 
 class Gameboard {
-  constructor(field = 10*10) {
+  constructor(side, field = 10*10) {
+    this.side = side;
+    if (this.side === ".ai-player") {
+      this.sideOpponent = ".player";
+    } else {
+      this.sideOpponent = ".ai-player";
+    }
     this.field = field;
     this.table = this.createTable();
     this.ships = [];
     this.miss = [];
+    this.randomShips = false;
   }
 
   createTable() {
     const tables = document.querySelectorAll(".table");
+
+    if (tables[0].querySelector("div") !== null || tables[1].querySelector("div") !== null) return;
 
     for(let i = 0; i < this.field; i++) {
       tables.forEach((table) => {
@@ -28,28 +37,47 @@ class Gameboard {
   }
 
   createShip(size, coordinates) {
-    if (size > 6 || size < 2) {
+    if (size > 4 || size < 1) {
       return console.log("ship length is incorrect!");
     }
     const ship = new Ship(size);
     const coordinate = [(coordinates[0] * 10) + coordinates[1], 
     ((coordinates[0] * 10) + coordinates[1]) + size]
 
+    if (this.checkForAvaliable(coordinate) === false) {
+      console.log(this.side)
+      if (this.side === ".ai-player") {
+        return this.createShip(size, [this.getRandomNumber(0, 9), this.getRandomNumber(0, 9 - size)])
+      } else if (this.randomShips) {
+        return this.createShip(size, [this.getRandomNumber(0, 9), this.getRandomNumber(0, 9 - size)])
+      } else {
+        console.log("Incorrect position!")
+      }
+    }
+
     if ((coordinates[1] + size) >= Math.sqrt(this.field)) {
       return console.log("is big coordinates!");
     }
     
-    const cells = document.querySelectorAll(".cell");
+    const sidePlayers = document.querySelector(this.side);
+    const cells = sidePlayers.querySelectorAll(".cell");
     const coordinatesShip = []
     for(let i = coordinate[0]; i <= coordinate[1]; i++) {
       cells[i].classList.add("field-ship");
+
+      // cells[i].classList.add("field-ship-side") // comment
+
+      if (this.side === ".player") {
+        cells[i].classList.add("field-ship-side")
+      }
       coordinatesShip.push(i);
     }
     return this.ships.push(new Node(coordinatesShip, ship))
   }
 
   receiveAttack(coordinate) {
-    const cells = document.querySelectorAll(".cell");
+    const sidePlayers = document.querySelector(this.sideOpponent);
+    const cells = sidePlayers.querySelectorAll(".cell");
     const coordinateAttack = (coordinate[0] * 10) + coordinate[1];
     if (cells[coordinateAttack].classList.contains("field-ship")) {
       for (let i of this.ships) {
@@ -76,23 +104,31 @@ class Gameboard {
     }
     return true;
   }
+  checkForAvaliable(coordinate) {
+    const coordinates = [];
+    for(let i = coordinate[0]; i <= coordinate[1]; i++) {
+      coordinates.push(i)
+    }
+    for (let i of this.ships) {
+      for (let cor of i.coordinates) {
+        for (let y of coordinates) {
+          if (cor === y || cor === y - 1 || cor === y + 1) {
+            return false;
+          } else if (cor === y - 10 || cor === y + 10) {
+            return false;
+          } else if (cor === y - 11 || cor === y + 11 || 
+            cor === y - 9 || cor === y + 9) {
+            return false;
+          }
+        }
+      }
+    }
+    return true;
+  }
+
+  getRandomNumber(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+  }
 }
 
 export { Gameboard }
-
-// const gameboard = new Gameboard();
-// gameboard.createShip(4, [6, 2]);
-// gameboard.createShip(3, [8, 4]);
-// gameboard.createShip(2, [1, 2]);
-// gameboard.createShip(2, [1, 8]);
-
-// gameboard.receiveAttack([6, 2]);
-// gameboard.receiveAttack([6, 4]);
-// gameboard.receiveAttack([6, 5]);
-// gameboard.receiveAttack([2, 4]);
-// gameboard.receiveAttack([3, 9]);
-// gameboard.receiveAttack([1, 2]);
-
-// console.log(gameboard.checkSunk());
-// console.log(gameboard.miss);
-// console.log(gameboard.ships);
