@@ -1,4 +1,4 @@
-import { Ship } from "./ship.js";
+import { Ship } from "../factories/ship.js";
 
 class Node {
   constructor(coordinates, ship) {
