@@ -51,7 +51,6 @@ class Gameboard {
     ];
 
     if (this.checkForAvaliable(coordinate) === false) {
-      console.log(this.side);
       if (this.side === ".ai-player") {
         return this.createShip(size, [
           this.getRandomNumber(0, 9),
@@ -90,21 +89,30 @@ class Gameboard {
   receiveAttack(coordinate) {
     const sidePlayers = document.querySelector(this.sideOpponent);
     const cells = sidePlayers.querySelectorAll(".cell");
-    const coordinateAttack = coordinate[0] * 10 + coordinate[1];
+    const coordinateAttack = coordinate;
     if (cells[coordinateAttack].classList.contains("field-ship")) {
       for (let i of this.ships) {
         for (let cor of i.coordinates) {
           if (coordinateAttack === cor) {
             i.ship.hit();
-            cells[coordinateAttack].classList.add("cell-destroyed");
+            cells[coordinateAttack].classList.add("cell-destroyed-ship");
             break;
           }
+          cells[coordinateAttack].classList.add("cell-destroyed");
         }
       }
     } else {
+      if (coordinateAttack in this.miss) {
+        if (this.side === ".ai-player") {
+          let coord = this.getRandomNumber(1, 99)
+          console.log(coord)
+          return this.receiveAttack(coord)
+        }
+      }
       cells[coordinateAttack].classList.add("cell-miss");
       this.miss.push(coordinateAttack);
     }
+
     return this;
   }
 

@@ -54,6 +54,33 @@ class Player {
     ]);
   }
 
+  attack(cord) {
+    this.checkForWins();
+    this.player.receiveAttack(cord);
+    this.aiPlayer.receiveAttack(this.getRandomNumber(0, 99));
+  }
+
+  checkForWins() {
+    if (this.player.checkSunk() === true) {
+      console.log(this.player.checkSunk())
+      alert("Win: " + this.aiPlayer);
+      this.clearTables();
+      return true;
+    }
+    if (this.aiPlayer.checkSunk() === true) {
+      console.log(this.player.checkSunk())
+      alert("Win: " + this.player);
+      this.clearTables();
+      return true;
+    }
+    return false;
+  }
+
+  clearTables() {
+    this.createRandomPlayerShips();
+    this.createAiShips();
+  }
+
   getRandomNumber(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
   }
